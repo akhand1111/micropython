@@ -144,6 +144,7 @@ SRC_C = \
 	can.c \
 	usb.c \
 	wdt.c \
+	c_sample.c \
 	gccollect.c \
 	pybstdio.c \
 	help.c \
