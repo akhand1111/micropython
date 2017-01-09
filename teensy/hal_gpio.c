@@ -1,6 +1,5 @@
 #include <stdint.h>
-#include <mk20dx128.h>
-#include "teensy_hal.h"
+#include "py/mphal.h"
 
 #define GPIO_NUMBER 32
 

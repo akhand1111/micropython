@@ -118,9 +118,11 @@ SRC_C = \
 	led.c \
 	modmachine.c \
 	modpyb.c \
+	modutime.c \
 	pin_defs_teensy.c \
 	reg.c \
 	rng.c \
+	rtc.c \
 	teensy_hal.c \
 	timer.c \
 	uart.c \

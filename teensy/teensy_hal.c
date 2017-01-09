@@ -8,13 +8,7 @@
 #include "uart.h"
 #include "Arduino.h"
 
-mp_uint_t mp_hal_ticks_ms(void) {
-  return millis();
-}
-
-void mp_hal_delay_ms(mp_uint_t ms) {
-  delay(ms);
-}
+bool mp_hal_ticks_cpu_enabled = false;
 
 void mp_hal_set_interrupt_char(int c) {
     usb_vcp_set_interrupt_char(c);
@@ -67,4 +61,13 @@ bool mp_hal_gpio_set_af(const pin_obj_t *pin, GPIO_InitTypeDef *init, uint8_t fn
     HAL_GPIO_Init(pin->gpio, init);
 
     return true;
+}
+
+void mp_hal_ticks_cpu_enable(void) {
+    if (!mp_hal_ticks_cpu_enabled) {
+        ARM_DEMCR |= ARM_DEMCR_TRCENA;
+        ARM_DWT_CYCCNT = 0;
+        ARM_DWT_CTRL |= ARM_DWT_CTRL_CYCCNTENA;
+        mp_hal_ticks_cpu_enabled = true;
+    }
 }

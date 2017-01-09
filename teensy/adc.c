@@ -425,25 +425,18 @@ STATIC mp_obj_t pyb_adc_channel(mp_uint_t n_args, const mp_obj_t *pos_args, mp_m
         return adc_new_channel_obj(self, id, args.diff.u_bool);
     }
 
-    printf("Using pin lookup\n");
-
     // We've been given a pin, check to see if our ADC exists on the pin.
     const pin_obj_t *pin = pin_find(pin_obj);
-    printf("Found pin %s\n", qstr_str(pin->name));
     const pin_af_obj_t *pin_af = adc_pin_find_af(pin, self->id);
     if (pin_af == NULL) {
-        printf("pin doesn't have ADC%d\n", self->id);
-
         // An ADC channel for the same ADC unit doesn't exist, see if we can
         // find an ADC channel for any ADC unit.
         pin_af = adc_pin_find_af(pin, 0xff);
         if (pin_af == NULL) {
             nlr_raise(mp_obj_new_exception_msg_varg(&mp_type_ValueError, "pin has no ADC function"));
         }
-        printf("Found ADC%d\n", pin_af->unit);
     }
     id = pin_af->type;
-    printf("Found ADC%d chan=%d\n", pin_af->unit, pin_af->type);
 
     if (MP_STATE_PORT(pyb_adc_obj_all)[pin_af->unit] == NULL) {
         // The functionality exists on another adc that hasn't yet been

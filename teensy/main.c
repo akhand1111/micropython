@@ -23,6 +23,7 @@
 #include "uart.h"
 #include "pin.h"
 #include "rng.h"
+#include "rtc.h"
 #include "lib/fatfs/ff.h"
 #include "extmod/fsusermount.h"
 #include "sdcard.h"
@@ -148,6 +149,9 @@ soft_reset:
 
     led_state(PYB_LED_BUILTIN, 1);
 
+#if MICROPY_HW_ENABLE_RTC
+    rtc_init();
+#endif
 #if MICROPY_HW_HAS_SDCARD
     sdcard_init();
 #endif

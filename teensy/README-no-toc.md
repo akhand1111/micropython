@@ -1,25 +1,3 @@
-# Table of Contents
-- [Build Instructions for Teensy 3.1, 3.5 and 3.6](#build-instructions-for-teensy-31-35-and-36)
-- [Building](#building)
-- [Flashing](#flashing)
-- [Running Scripts](#running-scripts)
-- [Accessing the REPL](#accessing-the-repl)
-- [TIPS](#tips)
-    - [Install 49-teensy.rules into /etc/udev/rules.d](#install-49-teensyrules-into-etcudevrulesd)
-    - [Create a GNUmakefile to hold your default settings.](#create-a-gnumakefile-to-hold-your-default-settings)
-    - [Tips for OSX](#tips-for-osx)
-    - [Use rshell to copy scripts onto the sdcard on the teensy](#use-rshell-to-copy-scripts-onto-the-sdcard-on-the-teensy)
-- [machine module](#machine-module)
-    - [machine.ADC](#machineadc)
-    - [machine.Pin](#machinepin)
-    - [machine.RTC](#machinertc)
-    - [machine.SD](#machinesd)
-    - [machine.Timer](#machinetimer)
-    - [machine.UART](#machineuart)
-    - [machine.USB_VCP](#machineusb_vcp)
-    - [machine misc functions](#machine-misc-functions)
-- [Other modules](#other-modules)
-
 # Build Instructions for Teensy 3.1, 3.5 and 3.6
 
 These instructions have been tested under Linux (Ubuntu 16.04) and may or may
@@ -197,7 +175,7 @@ print('Setting RTC to Jan 15, 2017 at 12 noon')
 rtc.datetime((2017, 1, 15, 6, 12, 0, 0, 0))
 
 def my_rtc_handler(rtc):
-print('alarm expired')
+    print('alarm expired')
 
 rtc.irq(RTC.ALARM0, handler=my_rtc_handler)
 rtc.alarm(2000) # Set an alarm for 2 seconds in the future

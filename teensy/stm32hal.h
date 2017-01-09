@@ -7,6 +7,7 @@
 #define __MICROPY_INCLUDED_TEENSY_STM32HAL_H__
 
 #include "kinetis.h"
+#include "core_pins.h"
 
 /**
   \brief  Structure type to access the System Control Block (SCB).

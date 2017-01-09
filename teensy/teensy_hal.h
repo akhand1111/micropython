@@ -195,3 +195,18 @@ struct _pin_obj_t;
 #define mp_hal_pin_low(p)  (((p)->gpio->PCOR) = (p)->pin_mask)
 #define mp_hal_pin_read(p) (((p)->gpio->PDIR >> (p)->pin) & 1)
 #define mp_hal_pin_write(p, v)  do { if (v) { mp_hal_pin_high(p); } else { mp_hal_pin_low(p); } } while (0)
+
+#define mp_hal_delay_ms(ms) delay(ms)
+#define mp_hal_delay_us(us) delayMicroseconds(us)
+#define mp_hal_delay_us_fast(us) delayMicroseconds(us)
+#define mp_hal_ticks_ms() millis()
+#define mp_hal_ticks_us() micros()
+
+extern bool mp_hal_ticks_cpu_enabled;
+void mp_hal_ticks_cpu_enable(void);
+static inline mp_uint_t mp_hal_ticks_cpu(void) {
+    if (!mp_hal_ticks_cpu_enabled) {
+        mp_hal_ticks_cpu_enable();
+    }
+    return ARM_DWT_CYCCNT;
+}

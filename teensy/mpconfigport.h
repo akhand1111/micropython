@@ -92,6 +92,7 @@
 #define MICROPY_PY_UBINASCII        (1)
 #define MICROPY_PY_URANDOM          (1)
 #define MICROPY_PY_URANDOM_EXTRA_FUNCS (1)
+#define MICROPY_PY_USELECT          (1)
 #define MICROPY_PY_UCTYPES          (1)
 #define MICROPY_PY_UZLIB            (1)
 #define MICROPY_PY_URE              (1)
@@ -119,7 +120,7 @@
 // extra built in modules to add to the list of known ones
 extern const struct _mp_obj_module_t machine_module;
 extern const struct _mp_obj_module_t pyb_module;
-extern const struct _mp_obj_module_t time_module;
+extern const struct _mp_obj_module_t mp_module_utime;
 extern const struct _mp_obj_module_t mp_module_uos;
 
 #if MICROPY_PY_UOS
@@ -130,18 +131,45 @@ extern const struct _mp_obj_module_t mp_module_uos;
 #define UOS_BUILTIN_WEAK_LINKS
 #endif
 
+#if MICROPY_PY_IO
+#define IO_BUILTIN_WEAK_LINKS  { MP_OBJ_NEW_QSTR(MP_QSTR_io), (mp_obj_t)&mp_module_io },
+#else
+#define IO_BUILTIN_WEAK_LINKS
+#endif
+
+#if MICROPY_PY_UJSON
+#define UJSON_BUILTIN_WEAK_LINKS  { MP_OBJ_NEW_QSTR(MP_QSTR_json), (mp_obj_t)&mp_module_ujson },
+#else
+#define UJSON_BUILTIN_WEAK_LINKS
+#endif
+
 #define MICROPY_PORT_BUILTIN_MODULES \
     { MP_OBJ_NEW_QSTR(MP_QSTR_umachine), (mp_obj_t)&machine_module }, \
     { MP_OBJ_NEW_QSTR(MP_QSTR_pyb), (mp_obj_t)&pyb_module }, \
     UOS_BUILTIN_MODULE \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_utime), (mp_obj_t)&mp_module_utime }, \
 
 #define MICROPY_PORT_BUILTIN_MODULE_WEAK_LINKS \
-    UOS_BUILTIN_WEAK_LINKS \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_binascii), (mp_obj_t)&mp_module_ubinascii }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_collections), (mp_obj_t)&mp_module_collections }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_errno), (mp_obj_t)&mp_module_uerrno }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_hashlib), (mp_obj_t)&mp_module_uhashlib }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_heapq), (mp_obj_t)&mp_module_uheapq }, \
+    IO_BUILTIN_WEAK_LINKS \
+    UJSON_BUILTIN_WEAK_LINKS \
     { MP_OBJ_NEW_QSTR(MP_QSTR_machine), (mp_obj_t)&machine_module }, \
+    UOS_BUILTIN_WEAK_LINKS \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_random), (mp_obj_t)&mp_module_urandom }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_re), (mp_obj_t)&mp_module_ure }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_select), (mp_obj_t)&mp_module_uselect }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_struct), (mp_obj_t)&mp_module_ustruct }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_time), (mp_obj_t)&mp_module_utime }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_zlib), (mp_obj_t)&mp_module_uzlib }, \
 
 // extra constants
 #define MICROPY_PORT_CONSTANTS \
     { MP_OBJ_NEW_QSTR(MP_QSTR_umachine), (mp_obj_t)&machine_module }, \
+    { MP_OBJ_NEW_QSTR(MP_QSTR_machine), (mp_obj_t)&machine_module }, \
     { MP_OBJ_NEW_QSTR(MP_QSTR_pyb), (mp_obj_t)&pyb_module }, \
 
 #define MP_STATE_PORT MP_STATE_VM
@@ -156,6 +184,7 @@ extern const struct _mp_obj_module_t mp_module_uos;
     /* pointers to all UART objects (if they have been created) */ \
     struct _pyb_uart_obj_t *pyb_uart_obj_all[MICROPY_HW_NUM_UARTS]; \
     struct _pyb_adc_obj_t *pyb_adc_obj_all[MICROPY_HW_NUM_ADCS]; \
+    mp_obj_t rtc_irq_handler; \
 
 // type definitions for the specific machine
 
@@ -208,5 +237,6 @@ __attribute__(( always_inline )) static inline mp_uint_t disable_irq(void) {
 
 #define MICROPY_BEGIN_ATOMIC_SECTION()     disable_irq()
 #define MICROPY_END_ATOMIC_SECTION(state)  enable_irq(state)
+#define MICROPY_EVENT_POLL_HOOK            __WFI();
 
 #endif // __INCLUDED_MPCONFIGPORT_H

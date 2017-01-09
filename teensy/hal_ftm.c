@@ -25,8 +25,7 @@
  */
 
 #include <stdint.h>
-#include <mk20dx128.h>
-#include "teensy_hal.h"
+#include "py/mphal.h"
 
 void HAL_FTM_Base_Init(FTM_HandleTypeDef *hftm) {
     /* Check the parameters */

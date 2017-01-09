@@ -44,7 +44,7 @@
 #include "extint.h"
 #include "usrsw.h"
 #include "rng.h"
-//#include "rtc.h"
+#include "rtc.h"
 //#include "i2c.h"
 //#include "spi.h"
 #include "uart.h"
@@ -216,13 +216,13 @@ STATIC const mp_map_elem_t pyb_module_globals_table[] = {
 
     { MP_OBJ_NEW_QSTR(MP_QSTR_Timer), (mp_obj_t)&pyb_timer_type },
 
-//#if MICROPY_HW_ENABLE_RNG
-//    { MP_OBJ_NEW_QSTR(MP_QSTR_rng), (mp_obj_t)&pyb_rng_get_obj },
-//#endif
+#if MICROPY_HW_ENABLE_RNG
+    { MP_OBJ_NEW_QSTR(MP_QSTR_rng), (mp_obj_t)&pyb_rng_get_obj },
+#endif
 
-//#if MICROPY_HW_ENABLE_RTC
-//    { MP_OBJ_NEW_QSTR(MP_QSTR_RTC), (mp_obj_t)&pyb_rtc_type },
-//#endif
+#if MICROPY_HW_ENABLE_RTC
+    { MP_OBJ_NEW_QSTR(MP_QSTR_RTC), (mp_obj_t)&pyb_rtc_type },
+#endif
 
     { MP_OBJ_NEW_QSTR(MP_QSTR_Pin), (mp_obj_t)&pin_type },
 //    { MP_OBJ_NEW_QSTR(MP_QSTR_ExtInt), (mp_obj_t)&extint_type },
@@ -246,7 +246,7 @@ STATIC const mp_map_elem_t pyb_module_globals_table[] = {
 //    { MP_OBJ_NEW_QSTR(MP_QSTR_SPI), (mp_obj_t)&pyb_spi_type },
     { MP_OBJ_NEW_QSTR(MP_QSTR_UART), (mp_obj_t)&pyb_uart_type },
 
-//    { MP_OBJ_NEW_QSTR(MP_QSTR_ADC), (mp_obj_t)&pyb_adc_type },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_ADC), (mp_obj_t)&pyb_adc_type },
 //    { MP_OBJ_NEW_QSTR(MP_QSTR_ADCAll), (mp_obj_t)&pyb_adc_all_type },
 
 //#if MICROPY_HW_ENABLE_DAC

@@ -13,3 +13,4 @@ for ver in 3.1 3.5 3.6; do
     BOARD=TEENSY_${ver}
     cp build-${BOARD}/micropython.hex hex-files/${HEX}
 done
+cp hex-files/*.hex hex-files/*.sh ~/Dropbox/teensy-micropython

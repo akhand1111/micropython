@@ -37,6 +37,8 @@
 #include "reg.h"
 #include "timer.h"
 
+#if MICROPY_HW_ENABLE_TIMER
+
 typedef enum {
     CHANNEL_MODE_PWM_NORMAL,
     CHANNEL_MODE_PWM_INVERTED,
@@ -652,6 +654,12 @@ STATIC mp_obj_t pyb_timer_period(mp_uint_t n_args, const mp_obj_t *args) {
 }
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(pyb_timer_period_obj, 1, 2, pyb_timer_period);
 
+STATIC mp_obj_t pyb_timer_source_freq(mp_obj_t self_in) {
+    (void)self_in;
+    return mp_obj_new_int(F_BUS);
+}
+STATIC MP_DEFINE_CONST_FUN_OBJ_1(pyb_timer_source_freq_obj, pyb_timer_source_freq);
+
 /// \method callback(fun)
 /// Set the function to be called when the timer triggers.
 /// `fun` is passed 1 argument, the timer object.
@@ -717,6 +725,7 @@ STATIC const mp_map_elem_t pyb_timer_locals_dict_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR_prescaler), (mp_obj_t)&pyb_timer_prescaler_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_period), (mp_obj_t)&pyb_timer_period_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_callback), (mp_obj_t)&pyb_timer_callback_obj },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_source_freq), (mp_obj_t)&pyb_timer_source_freq_obj },
 #if MICROPY_TIMER_REG
     { MP_OBJ_NEW_QSTR(MP_QSTR_reg), (mp_obj_t)&pyb_timer_reg_obj },
 #endif
@@ -990,3 +999,6 @@ void ftm1_isr(void) {
 void ftm2_isr(void) {
     ftm_irq_handler(2);
 }
+
+#endif // MICROPY_HW_ENABLE_TIMER
+

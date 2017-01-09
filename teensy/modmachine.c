@@ -37,9 +37,11 @@
 #include "irq.h"
 #include "pin.h"
 #include "rng.h"
+#include "rtc.h"
 #include "sdcard.h"
 #include "timer.h"
 #include "uart.h"
+#include "usb.h"
 
 #include "core_pins.h"
 
@@ -223,9 +225,10 @@ STATIC const mp_map_elem_t machine_module_globals_table[] = {
 
     { MP_OBJ_NEW_QSTR(MP_QSTR_ADC),                 (mp_obj_t)&pyb_adc_type },
     { MP_OBJ_NEW_QSTR(MP_QSTR_Pin),                 (mp_obj_t)&pin_type },
+#if MICROPY_HW_ENABLE_TIMER
     { MP_OBJ_NEW_QSTR(MP_QSTR_Timer),               (mp_obj_t)&pyb_timer_type },
-
-#if 0
+#endif
+#if MICROPY_HW_ENABLE_RTC
     { MP_OBJ_NEW_QSTR(MP_QSTR_RTC),                 (mp_obj_t)&pyb_rtc_type },
 #endif
 #if 0
@@ -235,6 +238,7 @@ STATIC const mp_map_elem_t machine_module_globals_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR_SPI),                 (mp_obj_t)&pyb_spi_type },
 #endif
     { MP_OBJ_NEW_QSTR(MP_QSTR_UART),                (mp_obj_t)&pyb_uart_type },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_USB_VCP),             (mp_obj_t)&pyb_usb_vcp_type },
 #if MICROPY_HW_HAS_SDCARD
     { MP_OBJ_NEW_QSTR(MP_QSTR_SD),                  (mp_obj_t)&pyb_sdcard_type },
 #endif

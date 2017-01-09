@@ -540,7 +540,7 @@ STATIC mp_obj_t pyb_uart_init_helper(pyb_uart_obj_t *self, mp_uint_t n_args, con
         { MP_QSTR_bits, MP_ARG_INT, {.u_int = 8} },
         { MP_QSTR_parity, MP_ARG_OBJ, {.u_obj = mp_const_none} },
         { MP_QSTR_stop, MP_ARG_INT, {.u_int = 1} },
-        { MP_QSTR_flow, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = HW_FLOW_NONE} },
+        { MP_QSTR_flow, MP_ARG_KW_ONLY | MP_ARG_OBJ, {.u_obj = mp_const_none} },
         { MP_QSTR_timeout, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 1000} },
         { MP_QSTR_timeout_char, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 0} },
         { MP_QSTR_read_buf_len, MP_ARG_KW_ONLY | MP_ARG_INT, {.u_int = 64} },
@@ -580,7 +580,11 @@ STATIC mp_obj_t pyb_uart_init_helper(pyb_uart_obj_t *self, mp_uint_t n_args, con
     self->bits = bits;
 
     // flow control
-    self->flow = args.flow.u_int;
+    if (args.flow.u_obj == mp_const_none) {
+        self->flow = 0;
+    } else {
+        self->flow = mp_obj_get_int(args.flow.u_obj);
+    }
 
     // init UART (if it fails, it's because the port doesn't exist)
     if (!uart_init(self, args.pins.u_obj)) {
