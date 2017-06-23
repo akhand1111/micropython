@@ -84,9 +84,11 @@ build/genhdr/qstr.i.last: | $(Z_EXPORTS)
 # If we recreate libmicropython, also cause zephyr.bin relink
 LIBMICROPYTHON_EXTRA_CMD = -$(RM) -f outdir/$(OUTDIR_PREFIX)/zephyr.lnk
 
-# Clean Zephyr things too
-clean: z_clean
+# Robust, unbreakable clean
+clean:
+	rm -rf build outdir
 
+# Shy Zephyr clean
 z_clean:
 	$(MAKE) -f Makefile.zephyr BOARD=$(BOARD) clean
 
