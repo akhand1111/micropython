@@ -217,6 +217,7 @@ SRC_C = \
 	can.c \
 	usb.c \
 	wdt.c \
+	c_sample.c \
 	gccollect.c \
 	help.c \
 	machine_i2c.c \

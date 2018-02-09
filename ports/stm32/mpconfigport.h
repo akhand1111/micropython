@@ -180,6 +180,7 @@ extern const struct _mp_obj_module_t mp_module_utime;
 extern const struct _mp_obj_module_t mp_module_usocket;
 extern const struct _mp_obj_module_t mp_module_network;
 extern const struct _mp_obj_module_t mp_module_onewire;
+extern const struct _mp_obj_module_t mp_module_c_sample;
 
 #if MICROPY_PY_USOCKET
 #define SOCKET_BUILTIN_MODULE               { MP_ROM_QSTR(MP_QSTR_usocket), MP_ROM_PTR(&mp_module_usocket) },
@@ -204,6 +205,7 @@ extern const struct _mp_obj_module_t mp_module_onewire;
     SOCKET_BUILTIN_MODULE \
     NETWORK_BUILTIN_MODULE \
     { MP_ROM_QSTR(MP_QSTR__onewire), MP_ROM_PTR(&mp_module_onewire) }, \
+    { MP_ROM_QSTR(MP_QSTR_c_sample), MP_ROM_PTR(&mp_module_c_sample) }, \
 
 #define MICROPY_PORT_BUILTIN_MODULE_WEAK_LINKS \
     { MP_ROM_QSTR(MP_QSTR_binascii), MP_ROM_PTR(&mp_module_ubinascii) }, \
@@ -285,6 +287,9 @@ extern const struct _mp_obj_module_t mp_module_onewire;
     \
     /* list of registered NICs */ \
     mp_obj_list_t mod_network_nic_list; \
+    \
+    /* C Sample callback obj */ \
+    mp_obj_t c_sample_callback_obj; \
 
 // type definitions for the specific machine
 
