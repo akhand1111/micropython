@@ -6,7 +6,7 @@
 #define MICROPY_HW_ENABLE_RTC       (1)
 
 // HSE is 8MHz, CPU freq set to 84MHz
-#define MICROPY_HW_CLK_PLLM (8)
+#define MICROPY_HW_CLK_PLLM (16)
 #define MICROPY_HW_CLK_PLLN (336)
 #define MICROPY_HW_CLK_PLLP (RCC_PLLP_DIV4)
 #define MICROPY_HW_CLK_PLLQ (7)
