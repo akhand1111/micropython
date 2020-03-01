@@ -213,6 +213,7 @@ extern const struct _mp_obj_module_t mp_module_utime;
 extern const struct _mp_obj_module_t mp_module_usocket;
 extern const struct _mp_obj_module_t mp_module_network;
 extern const struct _mp_obj_module_t mp_module_onewire;
+extern const struct _mp_obj_module_t mp_module_c_sample;
 
 #if MICROPY_PY_STM
 #define STM_BUILTIN_MODULE               { MP_ROM_QSTR(MP_QSTR_stm), MP_ROM_PTR(&stm_module) },
@@ -246,6 +247,7 @@ extern const struct _mp_obj_module_t mp_module_onewire;
     SOCKET_BUILTIN_MODULE \
     NETWORK_BUILTIN_MODULE \
     { MP_ROM_QSTR(MP_QSTR__onewire), MP_ROM_PTR(&mp_module_onewire) }, \
+    { MP_ROM_QSTR(MP_QSTR_c_sample), MP_ROM_PTR(&mp_module_c_sample) }, \
 
 // extra constants
 #define MICROPY_PORT_CONSTANTS \
@@ -299,6 +301,9 @@ struct _mp_bluetooth_nimble_root_pointers_t;
     \
     /* list of registered NICs */ \
     mp_obj_list_t mod_network_nic_list; \
+    \
+    /* C Sample callback obj */ \
+    mp_obj_t c_sample_callback_obj; \
     \
     MICROPY_PORT_ROOT_POINTER_MBEDTLS \
         MICROPY_PORT_ROOT_POINTER_BLUETOOTH_NIMBLE \
