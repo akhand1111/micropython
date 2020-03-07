@@ -26,9 +26,9 @@ Methods
 
 .. method:: RTC.init(datetime)
 
-   Initialise the RTC. Datetime is a tuple of the form:
+   Initialise the RTC. Datetime is an 8-tuple of the form:
 
-      ``(year, month, day[, hour[, minute[, second[, microsecond[, tzinfo]]]]])``
+      ``(year, month, day, wday, hour, minute, seconds, microseconds)``
 
 .. method:: RTC.now()
 
