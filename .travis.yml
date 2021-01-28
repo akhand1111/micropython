@@ -2,6 +2,14 @@ language: c
 compiler:
   - gcc
 
+arch:
+  - amd64
+  - arm64-graviton2
+
+virt: lxd
+
+group: edge
+
 before_script:
   - sudo add-apt-repository -y ppa:fkrull/deadsnakes
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
